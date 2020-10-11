@@ -27,9 +27,16 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        request()->validate([
+            'nama' => 'required',
+            'stok' => 'required',
+            'description' => 'required',
+        ]);
+        
         $item = Item::create([
             'nama' => $request->nama,
-            'stok' => 0
+            'stok' => $request->stok,
+            'description' => $request->description,
         ]);
 
         return $item;
@@ -43,7 +50,8 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Item::find($id);
+        return $item;
     }
 
     /**
@@ -64,6 +72,19 @@ class ItemController extends Controller
     {
         $item = Item::find($id);
         $item->update(['stok' => $item->stok-1]);
+        return $item;
+    }
+
+    public function update(Request $request, $id)
+    {
+        
+        $item = Item::find($id);
+        $item->update([
+            'nama' => $request->nama,
+            'stok' => $request->stok,
+            'description' => $request->description,
+        ]);
+
         return $item;
     }
 
