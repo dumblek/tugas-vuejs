@@ -1,6 +1,7 @@
 import Create from "../views/Create"
 import Home from "../views/Home"
 import Edit from "../views/Edit"
+import Register from "../views/Register"
 
 export default{
     mode: "history",
@@ -22,6 +23,11 @@ export default{
             path: "/edit",
             name: "edit",
             component: Edit
+        },
+        {
+            path: "/register",
+            name: "register",
+            component: Register
         },
     ]
 }
