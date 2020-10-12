@@ -70,9 +70,14 @@
                         </div>
                         <hr>
                         <div class="form-group row mb-0">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <a href="{{ url('auth/facebook') }}" class="btn btn-primary">
                                     Sign Up with Facebook
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="{{ url('auth/google') }}" class="btn btn-primary">
+                                    Sign Up with Google
                                 </a>
                             </div>
                         </div>
