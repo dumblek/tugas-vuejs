@@ -9,6 +9,9 @@
         <div class="navbar-nav">
           <router-link class="nav-link" exact to="/">Home <span class="sr-only">(current)</span></router-link>
           <router-link class="nav-link" to="/create">Tambah</router-link>
+          <router-link class="nav-link" to="/register">Register</router-link>
+          <router-link class="nav-link" to="/login">Login</router-link>
+          <router-link class="nav-link" to="/logout">Logout</router-link>
         </div>
       </div>
     </nav>

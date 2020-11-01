@@ -17,6 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::namespace('Auth')->group(function(){
+    Route::post('register', 'RegisterController');
+    Route::post('login', 'LoginController');
+    Route::post('logout', 'LogoutController');
+});
+
 Route::get('/item', 'ItemController@index');
 Route::get('/item/{id}', 'ItemController@show');
 Route::post('/item', 'ItemController@store');

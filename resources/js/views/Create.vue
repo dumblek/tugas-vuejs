@@ -54,6 +54,7 @@ export default {
                                     stok : '',
                                     description : ''
                                 }
+                                this.$router.push({ name: "home" });
                             }
                         });
                     } catch (e){

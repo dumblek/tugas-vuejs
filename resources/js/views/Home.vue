@@ -65,11 +65,11 @@ export default {
                 },
                 
             },
-            mounted(){
-                axios.get('/api/item').then(response => {
+    mounted(){
+        axios.get('/api/item').then(response => {
               
-                this.items = response.data;
-                })
-            },
+        this.items = response.data;
+        })
+    },
 }
 </script>
