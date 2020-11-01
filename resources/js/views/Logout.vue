@@ -1,6 +1,8 @@
 <template>
-  <div>
-      anda sudah logout
+  <div v-if="user">
+      anda sudah logout : {{userInfo}}
+      <br>
+      username : {{nama}}
   </div>
 </template>
 
@@ -10,12 +12,14 @@ import authHeader from '../auth-header';
 export default {
     data(){
         return{
-            token: localStorage.getItem('user'),
+            userInfo: 'sopoh',
+            nama: '',
         }
     },
     methods : {
                 logout: function(){
                         authHeader();
+                        
                         let response = axios.post('/api/logout').then(response => {
                             if (response.status == 200){
                                 localStorage.removeItem('user');
@@ -24,10 +28,19 @@ export default {
                             }
                         });
                         
-                }
+                },
+                user: function(){
+                            console.log('masuk');
+                            authHeader();
+                            axios.get('/api/user').then(response => {      
+                            //     //this.userInfo =  response.data.name;
+                            this.nama = response.data.name
+                            })
+                            console.log(this.nama);
+                            // return nama;
+                },
             },
-    mounted(){
-        //console.log(`Bearer ${this.token}`);
+    mounted() {
         this.logout();
     },
 }

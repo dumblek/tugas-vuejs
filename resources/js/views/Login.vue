@@ -65,7 +65,6 @@ export default {
     methods : {
                 store: function(){
                         let response = axios.post('/api/login', this.form).then(response => {
-                            //console.log(response.data.token)
                             if (response.status == 200){
                                 this.form = {
                                     email : '',
