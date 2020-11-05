@@ -12130,6 +12130,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _auth_header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../auth-header */ "./resources/js/auth-header.js");
 //
 //
 //
@@ -12162,30 +12163,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      newItem: '',
+      measurements: [],
       form: {
         nama: '',
         stok: '',
-        description: ''
+        description: '',
+        measurement_id: '',
+        price: ''
       }
     };
+  },
+  mounted: function mounted() {
+    this.getMeasurements();
   },
   methods: {
     store: function store() {
       var _this = this;
 
       try {
+        Object(_auth_header__WEBPACK_IMPORTED_MODULE_0__["default"])();
         var response = axios.post('/api/item', this.form).then(function (response) {
           console.log(response.status);
+          console.log(response.data);
 
           if (response.status == 201) {
             _this.form = {
               nama: '',
               stok: '',
-              description: ''
+              description: '',
+              measurement_id: '',
+              price: ''
             };
 
             _this.$router.push({
@@ -12196,6 +12223,15 @@ __webpack_require__.r(__webpack_exports__);
       } catch (e) {
         console.log('e.response.data.errors');
       }
+    },
+    getMeasurements: function getMeasurements() {
+      var _this2 = this;
+
+      console.log('halo');
+      axios.get('/api/measurements').then(function (response) {
+        console.log(response.data[0].measurement);
+        _this2.measurements = response.data;
+      });
     }
   }
 });
@@ -12211,6 +12247,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _auth_header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../auth-header */ "./resources/js/auth-header.js");
 //
 //
 //
@@ -12243,14 +12280,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       form: {
         nama: '',
         stok: '',
-        description: ''
-      }
+        description: '',
+        measurement_id: '',
+        price: ''
+      },
+      measurements: []
     };
   },
   methods: {
@@ -12258,6 +12315,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       try {
+        Object(_auth_header__WEBPACK_IMPORTED_MODULE_0__["default"])();
         var response = axios.put('/api/item/' + this.$route.params.id, this.form).then(function (response) {
           console.log(response.status);
 
@@ -12265,23 +12323,40 @@ __webpack_require__.r(__webpack_exports__);
             _this.form = {
               nama: '',
               stok: '',
-              description: ''
+              description: '',
+              measurement_id: '',
+              price: ''
             };
           }
+
+          _this.$router.push({
+            name: "home"
+          });
         });
       } catch (e) {
         console.log('e.response.data.errors');
       }
+    },
+    getMeasurements: function getMeasurements() {
+      var _this2 = this;
+
+      console.log('halo');
+      axios.get('/api/measurements').then(function (response) {
+        console.log(response.data[0].measurement);
+        _this2.measurements = response.data;
+      });
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     axios.get('/api/item/' + this.$route.params.id).then(function (response) {
-      _this2.form.nama = response.data.nama;
-      _this2.form.stok = response.data.stok;
-      _this2.form.description = response.data.description;
-    });
+      _this3.form.nama = response.data.nama;
+      _this3.form.stok = response.data.stok;
+      _this3.form.description = response.data.description;
+      _this3.form.measurement_id = response.data.measurement_id;
+      _this3.form.price = response.data.price;
+    }), this.getMeasurements();
   }
 });
 
@@ -12296,6 +12371,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12366,7 +12447,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     axios.get('/api/item').then(function (response) {
-      _this2.items = response.data;
+      _this2.items = response.data.data;
     });
   }
 });
@@ -12455,6 +12536,10 @@ __webpack_require__.r(__webpack_exports__);
             password: ''
           };
           localStorage.setItem('user', response.data.token); //this.$router.push({ name: "home" });
+
+          _this.$router.go(_this.$router.push({
+            name: "home"
+          }));
         }
       });
     }
@@ -48224,7 +48309,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("bezKoder")]
+        [_vm._v("dumblek's")]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "navbar-nav mr-auto" }, [
@@ -48249,13 +48334,11 @@ var render = function() {
           "li",
           { staticClass: "nav-item" },
           [
-            _vm.username
-              ? _c(
-                  "router-link",
-                  { staticClass: "nav-link", attrs: { to: "/user" } },
-                  [_vm._v("User")]
-                )
-              : _vm._e()
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/create" } },
+              [_vm._v("Tambah Barang")]
+            )
           ],
           1
         )
@@ -48324,12 +48407,7 @@ var render = function() {
                 {
                   staticClass: "nav-link",
                   attrs: { href: "" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.logout($event)
-                    }
-                  }
+                  on: { click: _vm.logout }
                 },
                 [
                   _c("font-awesome-icon", { attrs: { icon: "sign-out-alt" } }),
@@ -48475,6 +48553,98 @@ var render = function() {
                     return
                   }
                   _vm.$set(_vm.form, "description", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
+            {
+              staticClass: "col-sm-2 col-form-label",
+              attrs: { for: "satuan" }
+            },
+            [_vm._v("Satuan")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-10" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.measurement_id,
+                    expression: "form.measurement_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "measurement_id" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "measurement_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.measurements, function(measurement) {
+                return _c(
+                  "option",
+                  { key: measurement.id, domProps: { value: measurement.id } },
+                  [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(measurement.measurement) +
+                        "\n                        "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
+            { staticClass: "col-sm-2 col-form-label", attrs: { for: "harga" } },
+            [_vm._v("Harga")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-10" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.price,
+                  expression: "form.price"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "price" },
+              domProps: { value: _vm.form.price },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "price", $event.target.value)
                 }
               }
             })
@@ -48639,6 +48809,98 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
+            {
+              staticClass: "col-sm-2 col-form-label",
+              attrs: { for: "satuan" }
+            },
+            [_vm._v("Satuan")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-10" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.measurement_id,
+                    expression: "form.measurement_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "measurement_id" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "measurement_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.measurements, function(measurement) {
+                return _c(
+                  "option",
+                  { key: measurement.id, domProps: { value: measurement.id } },
+                  [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(measurement.measurement) +
+                        "\n                        "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
+            { staticClass: "col-sm-2 col-form-label", attrs: { for: "harga" } },
+            [_vm._v("Harga")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-10" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.price,
+                  expression: "form.price"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "price" },
+              domProps: { value: _vm.form.price },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "price", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
         _vm._m(0)
       ]
     )
@@ -48699,7 +48961,13 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(item.stok))]),
             _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.measurement))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.price))]),
+            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(item.description))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.user))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(item.created_at))]),
             _vm._v(" "),
@@ -48793,7 +49061,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Stok")]),
         _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Satuan")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Harga")]),
+        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Deskripsi")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Modifikasi")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tanggal")]),
         _vm._v(" "),
@@ -48833,7 +49107,7 @@ var render = function() {
             _c(
               "form",
               {
-                attrs: { method: "POST", action: "#" },
+                attrs: { method: "POST" },
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
@@ -64678,7 +64952,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/Edit */ "./resources/js/views/Edit.vue");
 /* harmony import */ var _views_Register__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../views/Register */ "./resources/js/views/Register.vue");
 /* harmony import */ var _views_Login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../views/Login */ "./resources/js/views/Login.vue");
-/* harmony import */ var _views_Logout__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../views/Logout */ "./resources/js/views/Logout.vue");
+/* harmony import */ var _views_Logout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../views/Logout */ "./resources/js/views/Logout.vue");
 
 
 
@@ -64711,7 +64985,7 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     path: "/logout",
     name: "logout",
-    component: _views_Logout__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _views_Logout__WEBPACK_IMPORTED_MODULE_5__["default"]
   }]
 });
 

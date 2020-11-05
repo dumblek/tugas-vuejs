@@ -30,3 +30,5 @@ Route::put('/item/plus/{id}', 'ItemController@plus');
 Route::put('/item/minus/{id}', 'ItemController@minus');
 Route::put('/item/{id}', 'ItemController@update');
 Route::delete('/item/{id}', 'ItemController@destroy');
+
+Route::get('/measurements', 'MeasurementController@index');

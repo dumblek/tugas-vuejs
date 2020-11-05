@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\ItemResource;
 use App\Item;
 
 class ItemController extends Controller
@@ -14,9 +15,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        //$items = Item::find(1);
+        //dd($items->user->name);
 
-        return $items;
+        //return $items;
+        return ItemResource::collection(Item::all());
     }
 
     /**
@@ -31,12 +34,17 @@ class ItemController extends Controller
             'nama' => 'required',
             'stok' => 'required',
             'description' => 'required',
+            'measurement_id' => 'required',
+            'price' => 'required',
         ]);
-        
+
         $item = Item::create([
             'nama' => $request->nama,
             'stok' => $request->stok,
             'description' => $request->description,
+            'measurement_id' => $request->measurement_id,
+            'price' => $request->price,
+            'user_id' => Auth()->user()->id,
         ]);
 
         return $item;
@@ -83,9 +91,12 @@ class ItemController extends Controller
             'nama' => $request->nama,
             'stok' => $request->stok,
             'description' => $request->description,
+            'measurement_id' => $request->measurement_id,
+            'price' => $request->price,
+            'user_id' => Auth()->user()->id,
         ]);
-
-        return $item;
+        return "data berhasil ditambah";
+        //return $item;
     }
 
     /**

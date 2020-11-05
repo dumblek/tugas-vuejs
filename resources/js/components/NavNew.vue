@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href class="navbar-brand" @click.prevent>bezKoder</a>
+      <a href class="navbar-brand" @click.prevent>dumblek's</a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link to="/" class="nav-link">
@@ -9,7 +9,7 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="username" to="/user" class="nav-link">User</router-link>
+          <router-link class="nav-link" to="/create">Tambah Barang</router-link>
         </li>
       </div>
 
@@ -34,7 +34,7 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href @click.prevent="logout">
+          <a class="nav-link" href @click="logout">
             <font-awesome-icon icon="sign-out-alt" />LogOut
           </a>
         </li>

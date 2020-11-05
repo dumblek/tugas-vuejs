@@ -8,7 +8,10 @@
                     <th scope="col">No</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Stok</th>
+                    <th scope="col">Satuan</th>
+                    <th scope="col">Harga</th>
                     <th scope="col">Deskripsi</th>
+                    <th scope="col">Modifikasi</th>
                     <th scope="col">Tanggal</th>
                     <th scope="col">Aksi</th>
                     </tr>
@@ -18,7 +21,10 @@
                         <th scope="row">{{index+1}}</th>
                         <td>{{item.nama}}</td>
                         <td>{{item.stok}}</td>
+                        <td>{{item.measurement}}</td>
+                        <td>{{item.price}}</td>
                         <td>{{item.description}}</td>
+                        <td>{{item.user}}</td>
                         <td>{{item.created_at}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
@@ -66,9 +72,8 @@ export default {
                 
             },
     mounted(){
-        axios.get('/api/item').then(response => {
-              
-        this.items = response.data;
+        axios.get('/api/item').then(response => {     
+            this.items = response.data.data;
         })
     },
 }

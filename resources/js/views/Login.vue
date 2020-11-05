@@ -6,7 +6,7 @@
                     <div class="card-header">Login</div>
 
                     <div class="card-body">
-                        <form method="POST" action="#" @submit.prevent="store">
+                        <form method="POST" @submit.prevent="store">
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
@@ -72,6 +72,7 @@ export default {
                                 };
                                 localStorage.setItem('user', response.data.token);
                                 //this.$router.push({ name: "home" });
+                                this.$router.go(this.$router.push({ name: "home" }))
                             }
                         });
                 }

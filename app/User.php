@@ -43,6 +43,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\SocialAccount');
     }
 
+    public function items()
+    {
+        return $this->hasMany('App\Item');
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
