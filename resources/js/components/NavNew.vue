@@ -8,7 +8,7 @@
             <font-awesome-icon icon="home" />Home
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="username">
           <router-link class="nav-link" to="/create">Tambah Barang</router-link>
         </li>
       </div>
@@ -28,7 +28,7 @@
 
       <div v-if="username" class="navbar-nav ml-auto">
         <li class="nav-item">
-          <router-link to="/profile" class="nav-link">
+          <router-link :to="{name:'profile', params:{id : user_id}}" class="nav-link">
             <font-awesome-icon icon="user" />
             {{ username }}
           </router-link>
@@ -52,6 +52,7 @@ export default {
     data(){
         return{
             username: '',
+            user_id: '',
         }
     },
     methods : {
@@ -73,14 +74,11 @@ export default {
     },
     computed: {
         currentUser: function(){
-                            console.log('masuk');
                             authHeader();
                             axios.get('/api/user').then(response => {      
-                            //     //this.userInfo =  response.data.name;
-                            this.username = response.data.name
+                              this.username = response.data.name
+                              this.user_id = response.data.id
                             })
-                            console.log(this.username);
-                            // return nama;
                 },
     }
 //   computed: {

@@ -4,6 +4,7 @@ import Edit from "../views/Edit"
 import Register from "../views/Register"
 import Login from "../views/Login"
 import Logout from "../views/Logout"
+import Profile from "../views/Profile"
 
 export default{
     mode: "history",
@@ -40,6 +41,11 @@ export default{
             path: "/logout",
             name: "logout",
             component: Logout
+        },
+        {
+            path: "/profile",
+            name: "profile",
+            component: Profile
         },
     ]
 }

@@ -13,7 +13,7 @@
                     <th scope="col">Deskripsi</th>
                     <th scope="col">Modifikasi</th>
                     <th scope="col">Tanggal</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" v-if="username">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +26,7 @@
                         <td>{{item.description}}</td>
                         <td>{{item.user}}</td>
                         <td>{{item.created_at}}</td>
-                        <td>
+                        <td v-if="username">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" @click="plus(item)" class="btn btn-secondary mr-1">+</button>
                                 <button type="button" @click="minus(item)" class="btn btn-secondary mr-1">-</button>
@@ -41,10 +41,13 @@
 </template>
 
 <script>
+import authHeader from '../auth-header';
+
 export default {
     data () {
         return{
                 items: [],
+                username: '',
               }  
             },
 
@@ -71,10 +74,21 @@ export default {
                 },
                 
             },
+
     mounted(){
         axios.get('/api/item').then(response => {     
             this.items = response.data.data;
         })
+        this.currentUser;
+    },
+
+    computed: {
+        currentUser: function(){
+                            authHeader();
+                            axios.get('/api/user').then(response => {      
+                              this.username = response.data.name
+                            })
+                },
     },
 }
 </script>

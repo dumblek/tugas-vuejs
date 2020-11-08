@@ -75,15 +75,17 @@ export default {
                     }
                     try{
                         let response = axios.post('/api/register', this.form).then(response => {
-                            console.log(response.data)
-                            if (response.status == 200){
+                            console.log(response.data.token)
+                            if (response.status == 201){
                                 this.form = {
                                     name : '',
                                     email : '',
                                     password : ''
                                 };
                                 this.password_confirmation = '';
-                                this.$router.push({ name: "home" });
+                                localStorage.setItem('user', response.data.token);
+                                //this.$router.push({ name: "home" });
+                                this.$router.go(this.$router.push({ name: "home" }))
                             }
                         });
                     } catch (e){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use JWTAuth;
 
 class RegisterController extends Controller
 {
@@ -22,12 +23,14 @@ class RegisterController extends Controller
             'password' => ['required','min:6']
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => request('name'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),
         ]);
 
-        return response('Terimakasih anda sudah terdaftar!!');
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json(compact('user','token'),201);
     }
 }

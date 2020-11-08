@@ -32,3 +32,5 @@ Route::put('/item/{id}', 'ItemController@update');
 Route::delete('/item/{id}', 'ItemController@destroy');
 
 Route::get('/measurements', 'MeasurementController@index');
+Route::post('/profil', 'ProfilController@store');
+Route::get('/profil/{id}', 'ProfilController@show');

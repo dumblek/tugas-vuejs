@@ -71,9 +71,11 @@ export default {
                 store: function(){
                     try{
                         authHeader();
+                        console.log(this.form);
+                        localStorage.getItem("user");
                         let response = axios.post('/api/item', this.form).then(response => {
-                            console.log(response.status)
-                            console.log(response.data)
+                            //console.log(response.status)
+                            //console.log(response.data)
                             if (response.status == 201){
                                 this.form = {
                                     nama : '',
@@ -91,7 +93,6 @@ export default {
                 },
 
                 getMeasurements: function(){
-                    console.log('halo')
                     axios.get('/api/measurements').then(response => {
                         console.log(response.data[0].measurement)
                         this.measurements = response.data;
