@@ -12676,6 +12676,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -12688,18 +12691,44 @@ __webpack_require__.r(__webpack_exports__);
         phone_number: '',
         photo: ''
       },
+      image: '',
       user_id: ''
     };
   },
   methods: {
+    onFileChange: function onFileChange(e) {
+      this.form.photo = e.target.files[0];
+      this.createImage(e.target.files[0]);
+    },
+    createImage: function createImage(file) {
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (e) {
+        vm.image = e.target.result;
+      };
+
+      console.log(vm.image);
+      reader.readAsDataURL(file);
+    },
     store: function store() {
       try {
         Object(_auth_header__WEBPACK_IMPORTED_MODULE_0__["default"])();
-        var response = axios.post('/api/profil/', this.form).then(function (response) {
+        console.log(this.form.photo);
+        var formData = new FormData();
+        formData.append('fullname', this.form.fullname);
+        formData.append('address', this.form.address);
+        formData.append('place_of_birth', this.form.place_of_birth);
+        formData.append('date_of_birth', this.form.date_of_birth);
+        formData.append('phone_number', this.form.phone_number);
+        formData.append('photo', this.form.photo);
+        console.log('>> formData >> ', formData);
+        var response = axios.post('/api/profil/', formData).then(function (response) {
           console.log(response.status);
 
-          if (response.status == 200) {
+          if (response.status == 201) {
             console.log(response.data);
+            alert("Berhasil Tambah");
           } //this.$router.push({ name: "home" });
 
         });
@@ -12721,7 +12750,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.form.place_of_birth = response.data[0].place_of_birth;
         _this.form.date_of_birth = response.data[0].date_of_birth;
         _this.form.phone_number = response.data[0].phone_number;
-        _this.form.photo = response.data[0].photo;
+        _this.image = response.data[0].photo;
       });
     }
   }
@@ -49445,7 +49474,7 @@ var render = function() {
     _c(
       "form",
       {
-        attrs: { action: "#", method: "post" },
+        attrs: { action: "#", method: "post", enctype: "multipart/form-data" },
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -49636,27 +49665,19 @@ var render = function() {
             [_vm._v("Photo Profil")]
           ),
           _vm._v(" "),
+          _vm.image
+            ? _c("div", { staticClass: "col-md-6" }, [
+                _c("img", {
+                  staticClass: "img-responsive",
+                  attrs: { src: _vm.image, height: "70", width: "90" }
+                })
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "col-sm-10" }, [
             _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.photo,
-                  expression: "form.photo"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", id: "photo" },
-              domProps: { value: _vm.form.photo },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "photo", $event.target.value)
-                }
-              }
+              attrs: { type: "file", name: "photo", required: "" },
+              on: { change: _vm.onFileChange }
             })
           ])
         ]),
@@ -65745,15 +65766,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************!*\
   !*** ./resources/js/views/Profile.vue ***!
   \****************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Profile_vue_vue_type_template_id_25b9215a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Profile.vue?vue&type=template&id=25b9215a& */ "./resources/js/views/Profile.vue?vue&type=template&id=25b9215a&");
 /* harmony import */ var _Profile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Profile.vue?vue&type=script&lang=js& */ "./resources/js/views/Profile.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Profile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Profile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -65783,7 +65803,7 @@ component.options.__file = "resources/js/views/Profile.vue"
 /*!*****************************************************************!*\
   !*** ./resources/js/views/Profile.vue?vue&type=script&lang=js& ***!
   \*****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

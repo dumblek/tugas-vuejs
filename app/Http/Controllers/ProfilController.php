@@ -15,7 +15,14 @@ class ProfilController extends Controller
             'place_of_birth' => 'required',
             'date_of_birth' => 'required',
             'phone_number' => 'required',
+            //'photo' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        $file = $request->file('photo');
+        $nama_file = time()."_".$file->getClientOriginalName();
+
+        $tujuan_upload = 'data_file';
+		$file->move($tujuan_upload,$nama_file);
 
         $item = Profil::create([
             'fullname' => $request->fullname,
@@ -23,7 +30,7 @@ class ProfilController extends Controller
             'place_of_birth' => $request->place_of_birth,
             'date_of_birth' => $request->date_of_birth,
             'phone_number' => $request->phone_number,
-            'photo' => $request->photo,
+            'photo' => $nama_file,
             'user_id' => Auth()->user()->id,
         ]);
 
@@ -36,4 +43,5 @@ class ProfilController extends Controller
         
         return $profil;
     }
+
 }
